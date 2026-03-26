@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIE A‑Level Math 9709 | Knowledge Flashcards</title>
+    <script>
+        MathJax = { tex: { inlineMath: [['\\(', '\\)']] }, startup: { typeset: false } };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: #f5f7fa;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .module-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+
+        .tab {
+            padding: 8px 16px;
+            background: #e2e8f0;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .tab.active {
+            background: #4299e1;
+            color: white;
+        }
+
+        .tab:hover {
+            background: #cbd5e0;
+        }
+
+        .flashcard {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            min-height: 420px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 30px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+            position: relative;
+            border: 3px solid #dbeafe;
+        }
+
+        .flashcard::before {
+            content: "MIRROR EDUCATION    MIRROR EDUCATION    MIRROR EDUCATION";
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #60a5fa;
+            letter-spacing: 1px;
+            white-space: nowrap;
+            z-index: 10;
+        }
+        .flashcard::after {
+            content: "MIRROR EDUCATION    MIRROR EDUCATION    MIRROR EDUCATION";
+            position: absolute;
+            bottom: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #60a5fa;
+            letter-spacing: 1px;
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        .flashcard:hover {
+            transform: translateY(-3px);
+        }
+
+        .card-content {
+            text-align: center;
+            width: 100%;
+        }
+
+        .knowledge-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .knowledge-detail {
+            font-size: 18px;
+            color: #4a5568;
+            line-height: 1.8;
+            display: none;
+        }
+
+        .knowledge-detail.show {
+            display: block;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #4299e1;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: #3182ce;
+        }
+
+        .card-counter {
+            text-align: center;
+            margin-top: 15px;
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .tip {
+            text-align: center;
+            margin-top: 10px;
+            color: #718096;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CIE A‑Level Mathematics 9709</h1>
+            <p>Tap card to show/hide details | Switch modules below</p>
+        </div>
+
+        <div class="module-tabs" id="tabs"></div>
+
+        <div class="flashcard" id="flashcard">
+            <div class="card-content">
+                <div class="knowledge-title" id="title"></div>
+                <div class="knowledge-detail" id="detail"></div>
+            </div>
+        </div>
+
+        <div class="nav-buttons">
+            <button class="nav-btn" id="prevBtn">Previous</button>
+            <button class="nav-btn" id="nextBtn">Next</button>
+        </div>
+
+        <div class="card-counter" id="counter"></div>
+        <div class="tip">💡 Full syllabus coverage | Clean knowledge flashcards</div>
+    </div>
+
+    <script>
+        const modules = {
+            "P1": [
+                {
+                    title: "Quadratic Functions & Completing the Square",
+                    detail: "Any quadratic \(ax^2+bx+c\) can be written as \(a(x-h)^2+k\).<br>Used to find vertex, range, and graph shape."
+                },
+                {
+                    title: "Discriminant of Quadratic Equation",
+                    detail: "\(\\Delta = b^2-4ac\)<br>• > 0: two distinct real roots<br>• = 0: one repeated real root<br>• < 0: no real roots"
+                },
+                {
+                    title: "Functions & One-One Functions",
+                    detail: "A function maps each input to exactly one output.<br>One-one function passes horizontal line test and has an inverse function."
+                },
+                {
+                    title: "Graph Transformations",
+                    detail: "\(y=f(x)+a\): vertical shift<br>\(y=f(x+a)\): horizontal shift<br>\(y=af(x)\): vertical stretch<br>\(y=f(ax)\): horizontal stretch"
+                },
+                {
+                    title: "Equation of a Circle",
+                    detail: "Standard form: \((x-a)^2+(y-b)^2=r^2\)<br>General form: \(x^2+y^2+2gx+2fy+c=0\)"
+                },
+                {
+                    title: "Radian Measure & Sectors",
+                    detail: "\(180^\circ = \pi\) radians<br>Arc length: \(s=r\theta\)<br>Sector area: \(A=\frac12 r^2\theta\)"
+                },
+                {
+                    title: "Basic Trigonometric Identities",
+                    detail: "\(\tan\theta = \dfrac{\sin\theta}{\cos\theta}\)<br>\(\sin^2\theta+\cos^2\theta \equiv 1\)"
+                },
+                {
+                    title: "Arithmetic & Geometric Sequences",
+                    detail: "AP: \(u_n = a+(n-1)d\)<br>GP: \(u_n = ar^{n-1}\)<br>Sum to infinity exists if \(|r|<1\)"
+                },
+                {
+                    title: "Differentiation Basics",
+                    detail: "Power rule: \(\dfrac{d}{dx}(x^n)=nx^{n-1}\)<br>Chain rule for composite functions."
+                },
+                {
+                    title: "Stationary Points",
+                    detail: "Found where \(\dfrac{dy}{dx}=0\).<br>Use second derivative to judge max, min, or inflection."
+                }
+            ],
+            "P2": [
+                {
+                    title: "Exponential & Logarithmic Equations",
+                    detail: "To solve \(a^{kx+b}=c\), take natural log on both sides and rearrange for \(x\)."
+                },
+                {
+                    title: "Reciprocal Trigonometric Functions",
+                    detail: "\(\sec\theta=\dfrac1{\cos\theta}\), \(\cosec\theta=\dfrac1{\sin\theta}\), \(\cot\theta=\dfrac1{\tan\theta}\)"
+                },
+                {
+                    title: "Pythagorean Identities",
+                    detail: "\(\sec^2\theta=1+\tan^2\theta\)<br>\(\csc^2\theta=1+\cot^2\theta\)"
+                },
+                {
+                    title: "Addition & Double Angle Formulae",
+                    detail: "Used to simplify expressions and solve trigonometric equations."
+                },
+                {
+                    title: "Product & Quotient Rule",
+                    detail: "Product: \((uv)'=u'v+uv'\)<br>Quotient: \(\left(\dfrac{u}{v}\right)'=\dfrac{u'v-uv'}{v^2}\)"
+                }
+            ],
+            "P3": [
+                {
+                    title: "Modulus Equations",
+                    detail: "Solve \(|ax+b|=|cx+d|\) by squaring both sides to remove modulus."
+                },
+                {
+                    title: "Binomial Expansion for Negative n",
+                    detail: "Valid when \(|x|<1\): \((1+x)^n = 1+nx+\dfrac{n(n-1)}{2!}x^2+\dots\)"
+                },
+                {
+                    title: "Integration by Parts",
+                    detail: "\(\int u\,dv = uv - \int v\,du\)<br>Used for products of functions."
+                },
+                {
+                    title: "Vectors: Lines in 3D",
+                    detail: "Vector equation: \(\mathbf{r}=\mathbf{a}+t\mathbf{b}\)<br>where \(\mathbf{b}\) is direction vector."
+                }
+            ],
+            "M1": [
+                {
+                    title: "SUVAT Kinematics",
+                    detail: "Constant acceleration equations:<br>\(v=u+at\), \(s=ut+\frac12 at^2\), \(v^2=u^2+2as\)"
+                },
+                {
+                    title: "Newton's Laws of Motion",
+                    detail: "Second law: \(F=ma\)<br>Forces include weight, friction, tension, normal reaction."
+                },
+                {
+                    title: "Work, Energy & Power",
+                    detail: "Work done = force × distance<br>KE = \(\frac12 mv^2\), GPE = \(mgh\)<br>Power \(P=Fv\)"
+                }
+            ],
+            "S1": [
+                {
+                    title: "Measures of Location & Spread",
+                    detail: "Mean, median, variance, standard deviation.<br>Used to summarize data sets."
+                },
+                {
+                    title: "Probability Rules",
+                    detail: "Mutually exclusive, independent events.<br>Conditional probability \(P(A|B)\)."
+                },
+                {
+                    title: "Binomial Distribution",
+                    detail: "Parameters \(n,p\).<br>Mean \(np\), variance \(np(1-p)\)."
+                }
+            ]
+        };
+
+        let currentModule = "P1";
+        let currentIndex = 0;
+        let cardList = modules[currentModule];
+
+        const tabsContainer = document.getElementById("tabs");
+        const titleEl = document.getElementById("title");
+        const detailEl = document.getElementById("detail");
+        const counterEl = document.getElementById("counter");
+        const card = document.getElementById("flashcard");
+
+        function renderTabs() {
+            tabsContainer.innerHTML = '';
+            Object.keys(modules).forEach(mod => {
+                const tab = document.createElement("button");
+                tab.className = "tab";
+                if (mod === currentModule) tab.classList.add("active");
+                tab.textContent = mod;
+                tab.onclick = () => {
+                    currentModule = mod;
+                    cardList = modules[currentModule];
+                    currentIndex = 0;
+                    renderCard();
+                };
+                tabsContainer.appendChild(tab);
+            });
+        }
+
+        async function renderCard() {
+            const item = cardList[currentIndex];
+            titleEl.innerHTML = '';
+            detailEl.innerHTML = '';
+            detailEl.classList.remove("show");
+
+            titleEl.innerHTML = item.title;
+            detailEl.innerHTML = item.detail;
+
+            counterEl.textContent = `Card ${currentIndex+1} of ${cardList.length} | Module: ${currentModule}`;
+
+            if (window.MathJax) {
+                await MathJax.typesetPromise([titleEl, detailEl]);
+            }
+        }
+
+        card.addEventListener("click", () => {
+            detailEl.classList.toggle("show");
+        });
+
+        document.getElementById("nextBtn").addEventListener("click", () => {
+            if (currentIndex < cardList.length - 1) {
+                currentIndex++;
+                renderCard();
+            }
+        });
+
+        document.getElementById("prevBtn").addEventListener("click", () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderCard();
+            }
+        });
+
+        renderTabs();
+        renderCard();
+    </script>
+</body>
+</html>
