@@ -552,6 +552,8 @@
         examActive = false;
         if(timerInterval) clearInterval(timerInterval);
         calculateAndShowResults();
+        // 调用成绩同步函数
+        syncToBackend(correctCount, percent);
     }
 
     function calculateAndShowResults() {
@@ -664,6 +666,34 @@
     nextBtn.addEventListener('click', () => { if(currentIndex < examData.length-1) showQuestion(++currentIndex); });
     submitBtn.addEventListener('click', submitExamHandler);
     restartBtn.addEventListener('click', () => location.reload());
+
+    // 自动同步我们自己的后端接口
+    function syncToBackend(correctCount, percent) {
+        const payload = {
+            accuracy: parseFloat(percent), // 转化如 "90.0%" 的格式，取数值即可
+            score: correctCount,
+            questionnaire_name: 'Mirror Education ESAT & TMUA Mock Exam', // 动态取赛事名（如 "Mirror 牛剑模拟赛"）
+            student_name: 'studentName',
+            school_name: 'studentSchool',
+            paper_type: 'paperType'
+        };
+
+        fetch('https://edu.mirroredu.net/api/questionnaire/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        }).then(res => res.json()).then(data => {
+            console.log("成绩同步后端成功", data);
+        }).catch(err => {
+            console.error("同步失败", err);
+        });
+    }// 自动同步到后端接口
+    
+
+
+
 </script>
 </body>
 </html> 
